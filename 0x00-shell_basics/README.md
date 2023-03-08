@@ -3,3 +3,4 @@ task 1. Display the contents list of your current directory.
 task 2. a script that changes the working directory to the user’s home directory.
 task 3. Display current directory contents in a long format.
 task 4. Display current directory contents, including hidden files. Use the long format.
+task 5. Display current directory contents.
