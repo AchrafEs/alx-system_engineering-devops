@@ -10,3 +10,4 @@ task 8. Delete the file betty.
 task 9. Delete the directory my firstdirectory that is in the /tmp directory.
 task 10. a script that changes the working directory to the previous one.
 task 11. Write a script that lists all files (even ones with names beginning with a period character, which are normally hidden) in the current directory and the parent of the working directory and the /boot directory (in this order), in long format. 
+task 12. Write a script that prints the type of the file named iamafile. The file iamafile will be in the /tmp directory when we will run your script.
