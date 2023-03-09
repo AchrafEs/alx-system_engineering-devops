@@ -18,3 +18,4 @@ task 13. a script that changes the group owner to school for the file hello
 task 14. a script that changes the owner to vincent and the group owner to staff for all the files and directories in            the working directory.a script that changes the owner to vincent and the group owner to staff for all the files         and directories in the working directory.
 task 15. a script that changes the owner and the group owner of _hello to vincent and staff respectively.
 task 16. a script that changes the owner of the file hello to betty only if it is owned by the user guillaume.
+task 17. a script that will play the StarWars IV episode in the terminal.
