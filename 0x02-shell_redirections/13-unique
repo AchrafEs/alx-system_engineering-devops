@@ -1,2 +1,2 @@
 #!/bin/bash
-tr ' ' '\n' <<< "orange juce is jucy orange juce yemmy" | sort | uniq -u
+sort | uniq -u
