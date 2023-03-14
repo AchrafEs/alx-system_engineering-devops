@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "scale=2; e(l(LOVE)*BREATH)" | bc
+echo e(l(LOVE)*BREATH)
