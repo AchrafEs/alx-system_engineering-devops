@@ -1,0 +1,2 @@
+#!/bin/bash
+set -a; set -o posix; set | grep -v '^BASH' | grep -v '^_' | less
