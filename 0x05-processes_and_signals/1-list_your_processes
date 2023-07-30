@@ -1,14 +1,44 @@
 #!/usr/bin/env bash
-# script that displays a list of currently running processes.
+# a script that displays a list of currently running processes.
 
+# Function to calculate the CPU usage percentage
+calculate_cpu_percentage() {
+  local utime=$(awk '{print $14}' "/proc/$1/stat")
+  local stime=$(awk '{print $15}' "/proc/$1/stat")
+  local total_time=$((utime + stime))
+  local elapsed_time=$(awk '{print $22}' "/proc/uptime")
+  local cpu_cores=$(nproc)
+  local cpu_usage=$((100 * total_time / (elapsed_time * cpu_cores)))
+  echo "$cpu_usage"
+}
+
+# Function to calculate the memory usage percentage
+calculate_memory_percentage() {
+  local vsz=$(awk '{print $23}' "/proc/$1/stat")
+  local rss=$(awk '{print $24}' "/proc/$1/stat")
+  local total_memory=$(($(grep MemTotal /proc/meminfo | awk '{print $2}') * 1024))
+  local memory_usage=$((100 * rss / total_memory))
+  echo "$memory_usage"
+}
+
+# Use psaxjf to get a user-oriented process tree and save it to a temporary file
 psaxjf > /tmp/process_tree.txt
-echo "USER        PID  PPID  PGID  TTY        STAT  COMMAND"
+
+# Display the header with column names
+echo "USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND"
+
+# Display the process tree with the additional %CPU and %MEM columns
 awk '
   BEGIN { indent = 0 }
   {
+    cpu_usage = system("./calculate_cpu_percentage.sh " $2);
+    mem_usage = system("./calculate_memory_percentage.sh " $2);
+
     for (i = 0; i < indent; i++) printf("  ");
-    printf("%-10s %5s %5s %5s %-10s %-4s %s\n", $1, $2, $3, $5, $6, $8, $9);
+    printf("%-10s %5s %4d %4d %-6s %-6s %-8s %-4s %s\n", $1, $2, cpu_usage, mem_usage, $5, $6, $7, $8, $9);
     indent = $4 - 2;
   }
 ' /tmp/process_tree.txt
+
+# Remove the temporary file
 rm /tmp/process_tree.txt
