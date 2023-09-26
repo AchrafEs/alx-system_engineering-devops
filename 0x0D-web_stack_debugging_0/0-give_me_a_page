@@ -4,3 +4,5 @@
 docker exec -it vigilant_tesla /bin/bash
 
 service nginx restart
+
+curl 0:8080
