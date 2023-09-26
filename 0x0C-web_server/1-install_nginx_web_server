@@ -16,6 +16,14 @@ EOF
 
 sudo nginx -t
 
+# Restart Nginx using the service command
 sudo service nginx restart
+
+# Check if Nginx is still running
+if sudo service nginx status | grep -q "active (running)"; then
+    echo "Nginx restarted successfully."
+else
+    echo "Nginx restart failed."
+fi
 
 sudo rm -f /var/www/html/index.nginx-debian.html
