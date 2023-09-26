@@ -1,29 +1,29 @@
 #!/usr/bin/env bash
 # A script that installs nginx
 
+# Update the package repository and install Nginx
 sudo apt-get update
 sudo apt-get install -y nginx
+
+# Check if Nginx is already listening on port 80
+if sudo netstat -tuln | grep ":80 "; then
+    echo "Nginx is already listening on port 80."
+else
+    # Configure Nginx to listen on port 80
+    sudo sed -i 's/.*listen 80;/listen 80;/g' /etc/nginx/sites-available/default
+
+    # Restart Nginx to apply the new configuration
+    sudo service nginx restart
+
+    echo "Nginx has been configured to listen on port 80."
+fi
 
 # Create a basic HTML file with "Hello World!"
 echo "<html><body>Hello World!</body></html>" | sudo tee /var/www/html/index.html > /dev/null
 
-# Configure the default Nginx site to serve the "Hello World!" page and listen on port 80
-cat <<EOF | sudo tee /etc/nginx/sites-available/default
-server {
-    listen 80 default_server;
-    server_name _;
-    root /var/www/html;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-}
-EOF
-
-# Test the Nginx configuration to ensure there are no syntax errors
-sudo nginx -t
-
-# Restart Nginx using systemctl
-sudo systemctl restart nginx
-
-echo "Nginx restarted and is listening on port 80."
+# Check if Nginx is serving the "Hello World!" page
+if curl -s http://localhost | grep -q "Hello World!"; then
+    echo "Nginx is serving the 'Hello World!' page."
+else
+    echo "Nginx is not serving the 'Hello World!' page."
+fi
