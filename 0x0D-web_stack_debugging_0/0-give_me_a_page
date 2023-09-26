@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# A script that fixes the docker container
+
+docker exec -it vigilant_tesla /bin/bash
+
+service nginx restart
