@@ -1,12 +1,29 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # A script that installs nginx
 
 sudo apt-get update
 sudo apt-get install -y nginx
 
-echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+# Create a basic HTML file with "Hello World!"
+echo "<html><body>Hello World!</body></html>" | sudo tee /var/www/html/index.html > /dev/null
 
-sudo service nginx stop
-sudo service nginx start
+# Configure the default Nginx site to serve the "Hello World!" page and listen on port 80
+cat <<EOF | sudo tee /etc/nginx/sites-available/default
+server {
+    listen 80 default_server;
+    server_name _;
+    root /var/www/html;
 
-echo "Nginx restarted."
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF
+
+# Test the Nginx configuration to ensure there are no syntax errors
+sudo nginx -t
+
+# Restart Nginx using systemctl
+sudo systemctl restart nginx
+
+echo "Nginx restarted and is listening on port 80."
