@@ -1,19 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # A script that installs nginx
 
-# Update the package repository and install Nginx
 sudo apt-get update
 sudo apt-get install -y nginx
 
-# Create a basic HTML file with "Hello World!"
 echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
 
-# Restart Nginx without using systemctl
-sudo kill -HUP $(cat /var/run/nginx.pid)
+sudo service nginx stop
+sudo service nginx start
 
-# Check if Nginx is still running
-if [ "$(pgrep nginx)" ]; then
-    echo "Nginx restarted successfully."
-else
-    echo "Nginx restart failed."
-fi
+echo "Nginx restarted."
