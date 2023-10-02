@@ -8,16 +8,26 @@
 # - Contains a custom HTTP header named X-Served-By.
 # - The value of the HTTP header is the hostname of the running server.
 
-sudo apt-get install -y nginx
+# Check for root privileges
+if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run as root (sudo)." 
+    exit 1
+fi
 
+# Install Nginx
+apt-get update
+apt-get install -y nginx
+
+# Create web root directory and populate it
 mkdir -p /var/www/html
 echo "Hello World!" > /var/www/html/index.html
 echo "Ceci n'est pas une page" > /var/www/html/404.html
 
+# Configure Nginx
 printf %s "server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    add_header X-Served-By \$HOSTNAME;
+    add_header X-Served-By \$hostname;
     root   /var/www/html;
     index  index.html index.htm;
 
@@ -32,4 +42,14 @@ printf %s "server {
     }
 }" > /etc/nginx/sites-available/default
 
+# Test Nginx configuration
+nginx -t
+
+# Restart Nginx
 service nginx restart
+
+# Clean up
+apt-get autoremove -y
+apt-get clean
+
+echo "Nginx installation and configuration completed."
