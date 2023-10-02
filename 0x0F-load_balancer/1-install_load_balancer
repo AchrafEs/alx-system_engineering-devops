@@ -17,8 +17,8 @@ backend Randommall.tech_backend
     timeout connect  3000
     timeout server  30000
     balance roundrobin
-    server 228560-web-01 34.207.62.252:80 check
-    server 228560-web-02 54.144.222.59:80 check
+    server 384408-web-01 34.207.62.252:80 check
+    server 384408-web-02 54.144.222.59:80 check
 EOT
 
 sudo service haproxy restart
