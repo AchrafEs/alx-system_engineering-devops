@@ -5,6 +5,12 @@ package { 'nginx':
   ensure => 'installed',
 }
 
+# Create the directory structure for the template file
+file { '/etc/puppet/modules/your_module/templates':
+  ensure => 'directory',
+  mode   => '0755', # Adjust permissions as needed
+}
+
 # Configure Nginx with custom HTTP header
 file { '/etc/nginx/sites-available/default':
   ensure  => present,
