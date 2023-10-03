@@ -21,4 +21,4 @@ backend Randommall.tech_backend
     server 384408-web-02 54.144.222.59:80 check
 EOT
 
-sudo service haproxy restart
+sudo systemctl restart haproxy
