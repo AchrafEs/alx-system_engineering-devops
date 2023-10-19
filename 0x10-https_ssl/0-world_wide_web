@@ -1,28 +1,18 @@
 #!/usr/bin/env bash
 # A script that displays information about a subdomain
 
-domain_information () {
-    # DNS lookup for the subdomain and extract relevant information with awk
-    dig "$2"."$1" +short | awk -v subdomain="$2" 'BEGIN { found=0 } {
-        if (found == 0 && $1 != "") {
-            printf "The subdomain %s is a A record and points to %s\n", subdomain, $1, $0;
-            found=1;
-        }
-    }'
+DNS_info () {
+    ANSWER=$(dig $2 | grep -A1 'ANSWER SECTION:' | awk 'NR==2 {print $0}')
+    echo "The subdomain $1 is a $(echo $ANSWER | awk '{print $4}') record and points to $(echo $ANSWER | awk '{print $5}')"
 }
 
-# Check the number of arguments
-if [ "$#" -eq 1 ]
-then
-    # Call the function with predefined subdomain names
-    domain_information "$1" "www"
-    domain_information "$1" "lb-01"
-    domain_information "$1" "web-01"
-    domain_information "$1" "web-02"
-elif [ "$#" -eq 2 ]
-then
-    # Call the function with the provided subdomain name
-    domain_information "$1" "$2"
+if [[ $# == 1 ]]; then
+    subdomains=('www' 'lb-01' 'web-01' 'web-02')
+    for i in "${subdomains[@]}"; do
+	CONCAT="$i.$1"
+	DNS_info $i $CONCAT
+    done
 else
-    echo "Usage: $0 <domain> [subdomain]"
+    CONCAT="$2.$1"
+    DNS_info $2 $CONCAT
 fi
