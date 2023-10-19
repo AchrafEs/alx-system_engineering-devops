@@ -1,17 +1,7 @@
 #!/usr/bin/env bash
 # A script that configures the container
 
-# Create a dedicated user for Nginx (if not already created)
-if ! getent passwd nginx > /dev/null 2>&1; then
-  useradd -r -s /sbin/nologin nginx
-fi
-
-# Modify Nginx configuration
-sed -i 's/^user.*/user nginx;/' /etc/nginx/nginx.conf
-sed -i 's/listen 80;/listen 8080;/g' /etc/nginx/sites-available/default
-
-# Restart Nginx
-service nginx restart
-
-# Check if Nginx is listening on port 8080
-nc -z 0 8080
+pkill apache2
+sed -i 's/80/8080/g' /etc/nginx/sites-available/default
+chmod 644 /etc/nginx/nginx.conf
+sudo -u nginx service nginx restart
