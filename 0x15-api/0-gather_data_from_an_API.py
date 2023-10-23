@@ -24,8 +24,8 @@ Requirements:
   TASK_TITLE (with 1 tabulation and 1 space before the TASK_TITLE)
 """
 
-import sys
 import requests
+import sys
 
 
 def get_employee_todo_progress(employee_id):
@@ -40,16 +40,17 @@ def get_employee_todo_progress(employee_id):
 
         # Count the number of completed tasks
         completed_tasks = [todo for todo in todos if todo['completed']]
-        num_completed_tasks = len(completed_tasks)
-        total_num_tasks = len(todos)
+        completed = len(completed_tasks)
+        total = len(todos)
 
         # Get the employee name
-        user_info_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
-        user_info = requests.get(user_info_url).json()
-        employee_name = user_info.get('name', 'Unknown Employee')
+        user_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
+        user_info = requests.get(user_url).json()
+        name = user_info.get('name', 'Unknown Employee')
 
         # Display the employee's TODO list progress
-        print(f"Employee {employee_name} is done with tasks ({num_completed_tasks}/{total_num_tasks}):")
+        pm = f"Employee {name} is done with tasks ({completed}/{total}):"
+        print(pm)
         # Display the titles of completed tasks
         for task in completed_tasks:
             print(f"\t{task['title']}")
