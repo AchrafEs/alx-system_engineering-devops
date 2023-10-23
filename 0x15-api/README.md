@@ -1,6 +1,6 @@
 ## 0x15. API
 
-### Defenition:
+### Definition:
 API stands for Application Programming Interface. It is a set of rules and protocols that allow different software applications to communicate with each other. APIs define the methods and data formats that applications can use to request and exchange information. They play a crucial role in modern software development and enable the integration of various services and systems.
 
 ### Here are some key aspects of APIs:
