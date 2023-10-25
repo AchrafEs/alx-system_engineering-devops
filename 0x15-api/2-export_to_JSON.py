@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
     user_id = sys.argv[1]
 
-    user = requests.get(url + "users/{}".format(user_id)).json()  # Fix URL here
+    user = requests.get(url + "users/{}".format(user_id)).json()
 
     username = user.get("username")
 
