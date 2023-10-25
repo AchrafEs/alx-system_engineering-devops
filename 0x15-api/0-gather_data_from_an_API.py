@@ -32,4 +32,4 @@ if __name__ == "__main__":
           .format(user.get("name"), len(completed), len(todos)))
 
     for complete in completed:
-        print("\t {}".format(complete))
+        print(" \t {}".format(complete))
