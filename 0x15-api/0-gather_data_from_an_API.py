@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """
 Retrieve and display an employee's TODO list progress.
 
