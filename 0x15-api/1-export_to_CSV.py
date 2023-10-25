@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 """
-Using what you did in the task #0, extend your Python script
-to export data in the CSV format.
+Using what you did in task #0, extend your Python script
+to export data in CSV format.
 
 Requirements:
 
@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     user_id = sys.argv[1]
 
-    user_response = requests.get(url + "user/{}".format(user_id))
+    user_response = requests.get(url + "users/{}".format(user_id))
 
     user = user_response.json()
 
